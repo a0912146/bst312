@@ -287,25 +287,32 @@ bool BST_312 <ItemType>::isFull() const
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
-    if (t == NULL) {
+    if(t == NULL) {
         t = new TreeNode;
         t->data = newItem;
         t->left = NULL;
         t->right = NULL;
+        return ;
     }
-    else {
         if (newItem < t->data) {
             return insertItem(t->left, newItem);
         }
         else {
            return insertItem(t->right, newItem);
         }
-    }
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(const ItemType& newItem) {
+    if (root == NULL) {
+        root = new TreeNode;
+        root->data = newItem;
+        root->left = NULL;
+        root->right = NULL;
+    }
+    else {
         insertItem(root, newItem);
+    }
 }
 
 
@@ -326,16 +333,12 @@ int BST_312 <ItemType>::countNodes()
 template<class ItemType>
 void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const {
     while(t != NULL) {
-        if(t) {
-            result.push_back(t->data);
-        }
+        result.push_back(t->data);
         if(t->left){
-            result.push_back(t->left->data);
-            t = t -> left;
+            preOrderTraversal(t -> left, result);
         }
         if(t->right){
-            result.push_back(t->right->data);
-            t = t -> right;
+            preOrderTraversal(t -> right, result);
         }
     }
 }
@@ -345,6 +348,9 @@ template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 {
     vector<ItemType> result;
+    if(root == NULL){
+        return result;
+    }
     preOrderTraversal(root, result);
     return result;
 }
@@ -375,25 +381,23 @@ vector<ItemType> BST_312 <ItemType>::inOrderTraversal()
 template<class ItemType>
 void BST_312 <ItemType>::postOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
-    while(t!=NULL){
         if(t->left){
-            result.push_back(t->left->data);
-            t = t -> left;
+            postOrderTraversal(t->left, result);
         }
         if(t->right){
-            result.push_back(t->right->data);
-            t = t -> right;
+            postOrderTraversal(t->right, result);
         }
-        if(t){
-            result.push_back(t->data);
-        }
-    }
+        result.push_back(t->data);
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 {
+
     vector<ItemType> result;
+    if(root == NULL){
+        return result;
+    }
     postOrderTraversal(root, result);
     return result;
 }
