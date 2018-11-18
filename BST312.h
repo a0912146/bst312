@@ -287,41 +287,26 @@ bool BST_312 <ItemType>::isFull() const
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
-    while(t!=NULL) {
+    if (t == NULL) {
+        TreeNode temp = new TreeNode;
+        temp->data = newItem;
+        temp->left = NULL;
+        temp->right = NULL;
+        t = temp;
+    }
+    else {
         if (newItem < t->data) {
-            if (t->left == NULL) {
-                t->left = new TreeNode;
-                t->left->data = newItem;
-                t->left->left = NULL;
-                t->left->right = NULL;
-            } else {
-                t = t->left;
-            }
+            return insertItem(t->left, newItem);
         }
-        if (newItem > t->data) {
-            if (t->right == NULL) {
-                t->right = new TreeNode;
-                t->right->data = newItem;
-                t->right->right = NULL;
-                t->right->left = NULL;
-            } else {
-                t = t->right;
-            }
+        else (newItem > t->data) {
+           return insertItem(t->right, newItem);
         }
     }
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(const ItemType& newItem) {
-    if(isEmpty() == true){
-        root = new TreeNode;
-        root->data = newItem;
-        root->left = NULL;
-        root->right = NULL;
-    }
-    else{
         insertItem(root, newItem);
-    }
 }
 
 
