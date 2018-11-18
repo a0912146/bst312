@@ -21,18 +21,26 @@ void print(vector<T> vec){
 
 int main() {
 
-    ifstream inFile;
-    inFile.open("test.txt");
+ //   ifstream inFile;
+  //  inFile.open("test.txt");
 
-    BST_312<string> bst;
+  BST_312<string> bst;
 
-    string s;
-    inFile >> s;
-    while (inFile) {;
+    string s = "f a c b d e g i h j k";
+    // inFile >> s;
         cout << "inserting ... " << s << endl;
-        bst.insertItem(s);
-        inFile >> s;
-    }
+        bst.insertItem("f");
+    bst.insertItem("a");
+    bst.insertItem("c");
+    bst.insertItem("b");
+    bst.insertItem("d");
+    bst.insertItem("e");
+    bst.insertItem("g");
+    bst.insertItem("i");
+    bst.insertItem("h");
+    bst.insertItem("j");
+    bst.insertItem("k");
+    //    inFile >> s;
 
     cout << "postorder traversal is " << endl;
     print(bst.postOrderTraversal());
