@@ -139,7 +139,6 @@ private:
     void preOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
     void postOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
     void copyTree(TreeNode*& copy, const TreeNode *originalTree);
-
 };
 
 /*******************************
@@ -289,8 +288,11 @@ bool BST_312 <ItemType>::isFull() const
 template<class ItemType>
 void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
     if(newItem < t->data) {
-        if (t->left == NULL) {
-            insertItem(t->left);
+        if (t -> left == NULL) {
+            t -> left = new TreeNode;
+            t -> left -> data = newItem;
+            t -> left -> left = NULL;
+            t -> left -> right = NULL;
         }
         else {
             insertItem(t->left, newItem);
@@ -298,10 +300,13 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem) {
     }
     if(newItem > t->data) {
         if(t->right == NULL){
-            insertItem(t->right);
+            t -> right = new TreeNode;
+            t -> right -> data = newItem;
+            t -> right -> right = NULL;
+            t -> right -> left = NULL;
         }
         else{
-            t->right = insertItem(t, newItem);
+            insertItem(t, newItem);
         }
     }
 }
@@ -315,7 +320,7 @@ void BST_312 <ItemType>::insertItem(const ItemType& newItem) {
         root->right = NULL;
     }
     else{
-        insert(root, newItem);
+        insertItem(root, newItem);
     }
 }
 
@@ -335,15 +340,18 @@ int BST_312 <ItemType>::countNodes()
 }
 
 template<class ItemType>
-void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const
-{
-    while(isFull() == true) {
-        if (t != NULL) {
-
-
-            preOrderTraversal(t->left, )
-        } else {
-            return;
+void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const {
+    while(t != NULL) {
+        if(t) {
+            result.push_back(t->data);
+        }
+        if(t->left){
+            result.push_back(t->left->data);
+            t = t -> left;
+        }
+        if(t->right){
+            result.push_back(t->right->data);
+            t = t -> right;
         }
     }
 }
@@ -354,33 +362,56 @@ vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 {
     vector<ItemType> result;
     preOrderTraversal(root, result);
-
+    return result;
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::inOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
-    //YOUR CODE GOES HERE
-
+    while(t != NULL) {
+        if(t->left){
+            result.push_back(t->left->data);
+            t = t -> left;
+        }
+        if(t->right){
+            result.push_back(t->right->data);
+            t = t -> right;
+        }
+    }
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::inOrderTraversal()
 {
-    //YOUR CODE GOES HERE
+    vector<ItemType> result;
+    inOrderTraversal(root, result);
+    return result;
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::postOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
-
-    //YOUR CODE GOES HERE
+    while(t!=NULL){
+        if(t->left){
+            result.push_back(t->left->data);
+            t = t -> left;
+        }
+        if(t->right){
+            result.push_back(t->right->data);
+            t = t -> right;
+        }
+        if(t){
+            result.push_back(t->data);
+        }
+    }
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 {
-    //YOUR CODE GOES HERE
+    vector<ItemType> result;
+    postOrderTraversal(root, result);
+    return result;
 }
 
 template<class ItemType>
