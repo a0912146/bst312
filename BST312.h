@@ -332,10 +332,13 @@ int BST_312 <ItemType>::countNodes()
 
 template<class ItemType>
 void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const {
-    while(t != NULL) {
+
         result.push_back(t->data);
-        preOrderTraversal(t -> left, result);
-        preOrderTraversal(t -> right, result);
+    if (t->left) {
+        preOrderTraversal(t->left, result);
+    }
+    if (t->right) {
+        preOrderTraversal(t->right, result);
     }
 }
 
@@ -353,12 +356,13 @@ vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 
 template<class ItemType>
 void BST_312 <ItemType>::inOrderTraversal(TreeNode* t,vector<ItemType>& result) const
-{
-    while(t != NULL) {
-        inOrderTraversal(t -> left, result);
+{        if (t->left) {
+            inOrderTraversal(t->left, result);
+        }
         result.push_back(t->data);
-        inOrderTraversal(t -> right, result);
-    }
+        if (t->right) {
+            inOrderTraversal(t->right, result);
+        }
 }
 
 template<class ItemType>
