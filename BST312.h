@@ -138,7 +138,7 @@ private:
     void preOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
     void postOrderTraversal(TreeNode* t,vector<ItemType>& result) const;
     void copyTree(TreeNode*& copy, const TreeNode *originalTree);
-    bool isItemInTree(TreeNode* t, const ItemType& item);
+    bool isItemInTree(TreeNode* t, const ItemType& item) const;
 };
 
 /*******************************
@@ -410,28 +410,33 @@ vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 }
 
 template <class ItemType>
-bool BST_312 <ItemType>::isItemInTree(TreeNode* t, const ItemType& item)
+bool BST_312 <ItemType>::isItemInTree(TreeNode* t, const ItemType& item) const
 {
-    bool true_or_false = false;
-    if(t->left) {
+    while(t) {
         if(item == t->data){
             return true;
         }
-        isItemInTree(t->left, item);
-    }
-    if (t->right) {
-        if(item == t->data){
-            return true;
+        //go through the right subtree only
+        else if (item > t->data) {
+            t = t->right;
         }
-        isItemInTree(t->right, item);
+        //go through the left subtree only
+        else{
+            t = t->left;
+        }
     }
-    return true_or_false;
+    return false;
 }
 
 template<class ItemType>
 bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
 {
-    return isItemInTree(root, item);
+    if( isItemInTree(root, item) == true){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 #endif
 
